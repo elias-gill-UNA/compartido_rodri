@@ -11,13 +11,12 @@ package enlace;
  */
 public class Enlace {
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args){
         ListaEnlazada lista=new ListaEnlazada();
         ListaEnlazada lista2=new ListaEnlazada();
         lista2.anhadir(23);
+        lista2.anhadir("Elias se pudo KAPE");
         lista.anhadir("Elias");
         lista.anhadir(45);
         lista.anhadir(80);
