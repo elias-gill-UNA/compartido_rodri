@@ -9,7 +9,8 @@ package enlace;
  *
  * @author Admin
  */
-public interface interfaz  extends Iterable{
+public interface interfaz {
     public void anhadir(Object elemento);
+
     public void listar();
 }

@@ -12,17 +12,21 @@ package enlace;
 public class Nodo {
     Object valor;
     Nodo siguiente;
-    public Nodo(Object valor){
-        this.valor=valor;
-        this.siguiente=null;
+
+    public Nodo(Object valor) {
+        this.valor = valor;
+        this.siguiente = null;
     }
-    public Object obtener_valor(){
-        return valor;  
+
+    public Object obtener_valor() {
+        return valor;
     }
-    public void agregar_nodo(Nodo n){
-        this.siguiente=n;
+
+    public void agregar_nodo(Nodo n) {
+        this.siguiente = n;
     }
-    public Nodo obtenerSiguiente(){
+
+    public Nodo obtenerSiguiente() {
         return siguiente;
     }
 }

@@ -10,11 +10,9 @@ package enlace;
  * @author Admin
  */
 public class Enlace {
-
-    
-    public static void main(String[] args){
-        ListaEnlazada lista=new ListaEnlazada();
-        ListaEnlazada lista2=new ListaEnlazada();
+    public static void main(String[] args) {
+        ListaEnlazada lista = new ListaEnlazada();
+        ListaEnlazada lista2 = new ListaEnlazada();
         lista2.anhadir(23);
         lista2.anhadir("Elias se pudo KAPE");
         lista.anhadir("Elias");
@@ -22,7 +20,11 @@ public class Enlace {
         lista.anhadir(80);
         lista.anhadir("Rodri");
         lista.anhadir(lista2);
+
         lista.listar();
+        for (Object var : lista) {
+            System.out.println(var);
+        }
     }
-    
+
 }
