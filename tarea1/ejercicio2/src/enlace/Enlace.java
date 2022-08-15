@@ -21,7 +21,7 @@ public class Enlace {
         lista.anhadir("Rodri");
         lista.anhadir(lista2);
 
-        lista.listar();
+        // lista.listar();
         for (Object var : lista) {
             System.out.println(var);
         }
