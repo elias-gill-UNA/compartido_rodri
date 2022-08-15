@@ -20,24 +20,25 @@ public class Repetidos<T> {
         HashMap<T, Boolean> repetidos = new HashMap<>();
 
         // Utilizando Arraylist, creamos un array que contiene el resultado
-        ArrayList<T> aux = new ArrayList<>(); // 1
+        ArrayList<T> res = new ArrayList<>(); // 1
 
         // internamente es un for de 0 a n
         for (T e : algo) { // n+1
 
             // si el elemento no esta repetido lo agrega al array resultado
-            // Una tabla hash es de acceso en tiempo constante y se realizan 2 operaciones (if y search)
+            // Una tabla hash es de acceso en tiempo constante y se realizan 2 operaciones
+            // (if y search)
             if (!repetidos.containsKey(e)) { // 2n
 
-                // segun la documentacion oficial de java, la operacion "add" de Arraylist 
+                // segun la documentacion oficial de java, la operacion "add" de Arraylist
                 // es de tiempo constante O(1)
-                aux.add(e); // n
+                res.add(e); // n
                 repetidos.put(e, true); // n
             }
         }
         // parcial: 4n+6 -> O(n)
 
-        return aux.toArray(); // O(n)
+        return res.toArray(); // O(n)
 
         // por tanto el tiempo final de ejecucion es de O(n)
     }
