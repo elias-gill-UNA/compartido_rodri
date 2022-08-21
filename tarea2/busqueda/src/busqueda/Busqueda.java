@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -137,3 +138,25 @@ public class Busqueda {
     }
 
 }
+=======
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package busqueda;
+
+/**
+ *
+ * @author Admin
+ */
+public class Busqueda {
+    public static void main(String[] args) {
+        double vector[] = {1,978.1, 3.3, 9, 44, 2, 4, 5};
+        double aux[] = buscar.sort(vector);
+        for (double var : aux) {
+            System.out.println(var);
+        }
+    }
+}
+>>>>>>> e3035f2 (no funciona fibbo)
