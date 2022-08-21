@@ -1,4 +1,5 @@
 package busqueda;
+
 /*
     Este codigo es del libro Weiss de las paginas 368 y 369
  */
@@ -39,7 +40,7 @@ public class Util<T extends Comparable<T>> {
             // Restaurar pivot
             swapReferences(a, i, high - 1);
 
-            quicksort(a, low, i - 1); // Ordena elementos pequeÃ±os
+            quicksort(a, low, i - 1); // Ordena elementos pequeños
             quicksort(a, i + 1, high); // Ordena elementos grandes
         }
 

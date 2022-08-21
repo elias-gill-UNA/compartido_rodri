@@ -16,22 +16,31 @@ public class Busqueda {
      */
     public static void main(String[] args) {
         // Hasta donde iterar
-        final int constante = 50000;
+        final int constante = 1000000;
         double t1, t2;
         double b1, b2;
+
+        System.out.println(
+                " -------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("| %-14s | %-59s | %47s\n |", "    N    ", "          Busqueda Lineal", "Busqueda Binaria    ");
+        System.out.println(
+                " --------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("| %-12s | %-12s | %-12s | %-12s | %-12s | %-12s | %-12s | %-12s | %-12s |\n",
+                "", "T(n) ms", "T/N", "T/(N*LogN)", "T/N^2", "T(n) ms", "T/N", "T/(N*LogN)", "T/(N^2)");
+
         for (int N = 50000; N <= constante; N += 50000) {
             double media1 = 0, media2 = 0;
 
-            // repetir N veces otra vez
-            for (int i = 0; i < N; i++) {
-                // generar numeros aleatorios
-                Double vector[] = new Double[N];
-                for (int j = 0; j < vector.length; j++) {
-                    double valorEntero = (Math.floor(Math.random() * (1000000 - 10000 + 1) +
-                            10000));
-                    vector[j] = valorEntero;
-                }
+            // generar numeros aleatorios
+            Integer vector[] = new Integer[N];
+            for (int j = 0; j < vector.length; j++) {
+                int valorEntero = (int) (Math.floor(Math.random() * (1000000 - 10000 + 1) +
+                        10000));
+                vector[j] = valorEntero;
+            }
 
+            // busqueda lineal
+            for (int i = 0; i < N; i++) {
                 // Elemento aleatorio del vector
                 int elemento = (int) (Math.floor(Math.random() * (N - 1)));
                 // Busqueda Lineal
@@ -39,19 +48,28 @@ public class Busqueda {
                 buscar.lineal(vector, vector[elemento]);
                 t2 = System.currentTimeMillis();
                 media1 += t2 - t1;
+            }
 
+            // ordenar y busqueda binaria
+            Util.quicksort(vector);
+            for (int i = 0; i < N; i++) {
+                int elemento = (int) (Math.floor(Math.random() * (N - 1)));
                 // Busqueda Binaria
-                Util.quicksort(vector);
                 b1 = System.currentTimeMillis();
                 buscar.busquedaBinaria(vector, vector[elemento]);
                 b2 = System.currentTimeMillis();
                 media2 += b2 - b1;
             }
+
             // imprimir resultados parciales
-            System.out.printf("%10d | %10f | %10f | %10f | %10f | %10f | %10f | %10f | %10f\n",
+            System.out.println(
+                    " --------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.printf("| %12d | %12f | %12f | %12f | %12f | %12f | %12f | %12f | %12f |\n",
                     N, media1, media1 / N, media1 / (N * (Math.log(N) / Math.log(2))),
-                    media1 / (N * N),
-                    media2, media2 / N, media2 / (N * (Math.log(N) / Math.log(2))), media2 / (N * N));
+                    media1 / (N ^ 2),
+                    media2, media2 / N, media2 / (N * (Math.log(N) / Math.log(2))), media2 / (N ^ 2));
         }
+        System.out.println(
+                " --------------------------------------------------------------------------------------------------------------------------------------");
     }
 }
