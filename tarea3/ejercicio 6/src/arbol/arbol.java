@@ -188,8 +188,6 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
         return null;
     }
     */
-  
-
     public void agregar_nodo_iterable(T dato) {
         NodoBST<T> nuevo = new NodoBST(dato);
         if (raiz == null) {
@@ -217,76 +215,62 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
 
         }
     }
-    public void eliminar_iterable(T dato){
+    public void eliminar_iterable(T dato) {
         NodoBST<T> nuevo = new NodoBST(dato);
-        NodoBST aux=raiz;
-        NodoBST padre=raiz;
-        boolean esHijoIzq=true;
-        while (aux.dato!=dato){
-            padre=aux;
-             int comprobar = dato.compareTo((T) aux.dato);
-            if(comprobar<0){
-                esHijoIzq=true;
-                aux=aux.izq;
-            }else{
-                esHijoIzq=false;
-                aux=aux.der;
+        NodoBST aux = raiz;
+        NodoBST padre = raiz;   // para tener referencia al nodo padre
+        boolean esHijoIzq = true;
+        while (aux != null && aux.dato != dato) {
+            padre = aux;
+            int comprobar = dato.compareTo((T) aux.dato);
+            if (comprobar < 0) {
+                esHijoIzq = true;
+                aux = aux.izq;
+            } else {
+                esHijoIzq = false;
+                aux = aux.der;
             }//Fin del Mientras que Busca el dato a Eliminar
         }
+
         //Comprobacion de los casos de eliminacion
-        if(aux.izq==null && aux.der==null){
-            if(aux==raiz){
-                raiz=null;
-            }else if(esHijoIzq){
-                padre.izq=null;
-            }else{
-                padre.der=null;
+        if (aux.izq == null && aux.der == null) { // es una hoja
+            if (esHijoIzq) {
+                padre.izq = null;
+            } else {
+                padre.der = null;
             }
-        }else if(aux.der==null){
-            if(aux==raiz){
-                raiz=aux.izq;
-            }else if(esHijoIzq){
-                padre.izq=aux.izq;
-            }else{
-                padre.der=aux.izq;
+        } else if (aux.der == null) { // tiene un hijo a la izquierda
+            NodoBST nodoBSTAux = aux.izq; // nodo sustituto
+            // actualizamos los datos del nodo 
+            aux.dato = nodoBSTAux.dato;
+            aux.izq = nodoBSTAux.izq;
+            aux.der = nodoBSTAux.izq;
+        } else if (aux.izq == null) { // tiene un hijo a la derecha
+            NodoBST nodoBSTAux = aux.der; // nodo sustituto
+            // actualizamos los datos del nodo 
+            aux.dato = nodoBSTAux.dato;
+            aux.izq = nodoBSTAux.izq;
+            aux.der = nodoBSTAux.izq;
+        } else { // el nodo que queremos eliminar tiene dos hijos :(
+
+            NodoBST reemplazo = aux.der;
+
+            while (reemplazo.izq != null) {
+                padre = reemplazo;
+                reemplazo = reemplazo.izq;
             }
-        }else if(aux.izq==null){
-            if(aux==raiz){
-                raiz=aux.der;
-            }else if(esHijoIzq){
-                padre.der=aux.der;
-            }else{
-                padre.izq=aux.der;
+  
+            aux.dato = reemplazo.dato;
+            if (reemplazo == aux.der) {
+                aux.der = reemplazo.der;
+            } else {
+                padre.izq = reemplazo.der;
             }
-        }else{
-            NodoBST reemplazo=obtener_reemplazo(aux);
-            if(aux==raiz){
-                raiz=reemplazo;
-            }else if(esHijoIzq){
-                padre.izq=reemplazo;
-            }else{
-                padre.der=reemplazo;
-            }
-            reemplazo.izq=aux.der;
+
         }
-        //Metodo para buscar el reemplazo
-       
     }
-     public NodoBST obtener_reemplazo(NodoBST nod){
-        NodoBST reemplazarPadre=nod;
-        NodoBST reemplazo=nod;
-        NodoBST auxiliar=nod.der;
-        while(auxiliar!=null){
-            reemplazarPadre=reemplazo;
-            reemplazo=auxiliar;
-            auxiliar=auxiliar.izq;
-        }
-        if(reemplazo!=nod.der){
-            reemplazarPadre.izq=reemplazarPadre.der;
-            reemplazo.der=nod.der;
-        }
-        return reemplazo;
-    }
+    
+     
     public static void main(String[] args) {
         arbol<Integer> nuevo = new arbol<>();
         
@@ -298,7 +282,8 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
         nuevo.agregar(7);
         nuevo.agregar(9);
         nuevo.imprimir();
-        nuevo.eliminar_iterable(2);
+        nuevo.eliminar_iterable(5);
+        nuevo.eliminar_iterable(9);
         nuevo.imprimir();
         
         
