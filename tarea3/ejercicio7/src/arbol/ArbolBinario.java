@@ -1,13 +1,13 @@
 package arbol;
 
-class AVLTree {
-    private NodoAbstracto root;
+class ArbolBinario {
+    private NodoNormal root;
 
-    public NodoAbstracto getRoot() {
+    public NodoNormal getRoot() {
         return root;
     }
 
-    public void add(NodoAbstracto node) {
+    public void add(NodoNormal node) {
         if (root == null) {
             root = node;
         } else {
