@@ -29,14 +29,14 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
             this.dato = dato;
         }
 
-        public NodoBST<E> buscarSucesor() {
+        public NodoBST<E> buscarSucesor(){//N(h)
             if (this.izq != null) {
                 return this.izq.buscarSucesor();
             }
             return this;
         }
 
-        public NodoBST<E> buscarPredecesor() {
+        public NodoBST<E> buscarPredecesor() {//N(h)
             if (this.der != null) {
                 return this.der.buscarPredecesor();
             }
@@ -189,21 +189,21 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
         return null;
     }
     */
-    public void agregar_nodo_iterable(T dato) {
-        NodoBST<T> nuevo = new NodoBST(dato);
+    public void agregar_nodo_iterable(T dato) {//6n+5 O(n)
+        NodoBST<T> nuevo = new NodoBST(dato);//
         
-        if (raiz == null) {
+        if (raiz == null) {//1
             raiz = nuevo;
         } else {
-            NodoBST aux = raiz;
+            NodoBST aux = raiz;//1
             NodoBST padre;
-            while (true) {
-                padre = aux;
-                int comprobar = dato.compareTo((T) aux.dato);
-                if (comprobar < 0) {
-                    aux = aux.izq;
-                    if (aux == null) {
-                        padre.izq = nuevo;
+            while (true) {//n+1
+                padre = aux;//1
+                int comprobar = dato.compareTo((T) aux.dato);//1
+                if (comprobar < 0) {//1
+                    aux = aux.izq;//1
+                    if (aux == null) {//1
+                        padre.izq = nuevo;//1
                         break;
                     }
                 } else {
@@ -215,15 +215,15 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
                 }
             }
         }
-        cantidad_nodos++;
+        cantidad_nodos++;//2
     }
     
-    public void cant_hojas(){
-        int c=0;
-        for(Object elemento:this){
-            NodoBST<T> aux=new NodoBST(elemento);
-            if(aux.der==null && aux.izq==null){
-                c++;
+    public void cant_hojas(){//6n+2 O(n)
+        int c=0;//1
+        for(Object elemento:this){//n+1
+            NodoBST<T> aux=new NodoBST(elemento);//1
+            if(aux.der==null && aux.izq==null){//2
+                c++;//2
             }
         }
         System.out.println("Cantidad nodo hojas del arbol");
@@ -239,17 +239,17 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
         int h=altura_arbol(raiz);
         return h;
     }
-    public void eliminar_iterable(T dato) {
-        NodoBST<T> nuevo = new NodoBST(dato);
-        NodoBST aux = raiz;
-        NodoBST padre = raiz;   // para tener referencia al nodo padre
-        boolean esHijoIzq = true;
-        while (aux != null && aux.dato != dato) {
+    public void eliminar_iterable(T dato) { //12n+10 O(n)
+        NodoBST<T> nuevo = new NodoBST(dato);//1
+        NodoBST aux = raiz;//1
+        NodoBST padre = raiz; //1  // para tener referencia al nodo padre
+        boolean esHijoIzq = true;//1
+        while (aux != null && aux.dato != dato) {//n+1
             padre = aux;
-            int comprobar = dato.compareTo((T) aux.dato);
-            if (comprobar < 0) {
-                esHijoIzq = true;
-                aux = aux.izq;
+            int comprobar = dato.compareTo((T) aux.dato);//2
+            if (comprobar < 0) {//1
+                esHijoIzq = true;//1
+                aux = aux.izq;//1
             } else {
                 esHijoIzq = false;
                 aux = aux.der;
@@ -257,19 +257,19 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
         }
         
         //Comprobacion de los casos de eliminacion
-        if (aux.izq == null && aux.der == null) { // es una hoja
-            if (esHijoIzq) {
-                padre.izq = null;
+        if (aux.izq == null && aux.der == null) {//1 // es una hoja
+            if (esHijoIzq) {//1
+                padre.izq = null;//1
             } else {
                 padre.der = null;
             }
-        } else if (aux.der == null) { // tiene un hijo a la izquierda
-            NodoBST nodoBSTAux = aux.izq; // nodo sustituto
+        } else if (aux.der == null) {//1 // tiene un hijo a la izquierda
+            NodoBST nodoBSTAux = aux.izq;// nodo sustituto
             // actualizamos los datos del nodo 
             aux.dato = nodoBSTAux.dato;
             aux.izq = nodoBSTAux.izq;
             aux.der = nodoBSTAux.izq;
-        } else if (aux.izq == null) { // tiene un hijo a la derecha
+        } else if (aux.izq == null) {  // tiene un hijo a la derecha
             NodoBST nodoBSTAux = aux.der; // nodo sustituto
             // actualizamos los datos del nodo 
             aux.dato = nodoBSTAux.dato;
@@ -277,16 +277,16 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
             aux.der = nodoBSTAux.izq;
         } else { // el nodo que queremos eliminar tiene dos hijos :(
 
-            NodoBST reemplazo = aux.der;
+            NodoBST reemplazo = aux.der;//1
 
-            while (reemplazo.izq != null) {
-                padre = reemplazo;
-                reemplazo = reemplazo.izq;
+            while (reemplazo.izq != null) {//n+1
+                padre = reemplazo;//1
+                reemplazo = reemplazo.izq;//1
             }
   
-            aux.dato = reemplazo.dato;
-            if (reemplazo == aux.der) {
-                aux.der = reemplazo.der;
+            aux.dato = reemplazo.dato;//1
+            if (reemplazo == aux.der) {//1
+                aux.der = reemplazo.der;//1
             } else {
                 padre.izq = reemplazo.der;
             }
@@ -294,20 +294,20 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
         }
         cantidad_nodos--;
     }
-    public boolean esLLeno(){
-        int k=altura_del_arbol();
-        if ((2*k)-1==cantidad_nodos) {
-            return true;
+    public boolean esLLeno(){//4n O(n)
+        int k=altura_del_arbol();//1
+        if ((2*k)-1==cantidad_nodos) {//1
+            return true;//1
         } else {
-            return false;
+            return false;//1
         }
     }
-    public boolean esCompleto(){
-        int k=altura_del_arbol();
-        if (((Math.pow(2, k))-1)==cantidad_nodos) {
-            return true;
+    public boolean esCompleto(){//6n O(n)
+        int k=altura_del_arbol();//1
+        if (((Math.pow(2, k))-1)==cantidad_nodos){//2+1
+            return true;//1
         } else{
-            return false;
+            return false;//1
         }
     }
      
