@@ -189,7 +189,8 @@ public class arbol {
         nuevo.agregar(1);
         nuevo.agregar(7);
         nuevo.agregar(9);
-
+        System.out.println(nuevo.subarboles(4, 2));
         System.out.println(nuevo.subarboles(1, 5));
+        System.out.println(nuevo.subarboles(8, 7));
     }
 }
