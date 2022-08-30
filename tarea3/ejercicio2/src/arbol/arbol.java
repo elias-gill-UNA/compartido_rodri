@@ -1,6 +1,7 @@
 package arbol;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /*
  * ALGORITMOS Y ESTRUCTURAS DE DATOS III - Seccion TQ - Prof. Cristian Cappo / Prof. Luis More
@@ -12,28 +13,29 @@ import java.util.ArrayList;
  * es un Comparable o derivado. 
  */
 
-public class arbol {
+public class arbol<T extends Comparable<T>> implements Iterable<Object> {
     // raiz del arbol
-    private NodoBST raiz = null;
+    private NodoBST<T> raiz = null;
+    private ArrayList<T> lista = new ArrayList<>();
 
     // clase que representa un nodo del arbol
-    private class NodoBST {
-        Integer dato = null;
-        NodoBST izq = null;
-        NodoBST der = null;
+    private class NodoBST<E> {
+        E dato = null;
+        NodoBST<E> izq = null;
+        NodoBST<E> der = null;
 
-        public NodoBST(Integer dato) {
+        public NodoBST(E dato) {
             this.dato = dato;
         }
 
-        public NodoBST buscarSucesor() {
+        public NodoBST<E> buscarSucesor() {
             if (this.izq != null) {
                 return this.izq.buscarSucesor();
             }
             return this;
         }
 
-        public NodoBST buscarPredecesor() {
+        public NodoBST<E> buscarPredecesor() {
             if (this.der != null) {
                 return this.der.buscarPredecesor();
             }
@@ -44,13 +46,13 @@ public class arbol {
 
     // ----- desde aca son metodos del arbol ----------
     /* Agregar un dato al arbol */
-    public void agregar(Integer dato) {
+    public void agregar(T dato) {
         raiz = priv_agregar(raiz, dato);
     }
 
     // Retorna el "nodo" donde se encuentra la primera ocurrencia del dato buscado
-    public NodoBST buscar(Integer dato) {
-        NodoBST nodo = priv_buscar(raiz, dato);
+    public NodoBST<T> buscar(T dato) {
+        NodoBST<T> nodo = priv_buscar(raiz, dato);
         if (nodo != null)
             return nodo;
         else { /* Reemplazar por manejo de excepcion!! */
@@ -71,9 +73,9 @@ public class arbol {
     }
 
     // --- Metodos privados ---
-    private NodoBST priv_agregar(NodoBST n_actual, Integer dato) {
+    private NodoBST<T> priv_agregar(NodoBST<T> n_actual, T dato) {
         if (n_actual == null)
-            return (new NodoBST(dato));
+            return (new NodoBST<T>(dato));
 
         int comparacion = n_actual.dato.compareTo(dato);
 
@@ -86,7 +88,7 @@ public class arbol {
     }
 
     // Imprime en in-orden
-    private void priv_imprimir(NodoBST n_actual) {
+    private void priv_imprimir(NodoBST<T> n_actual) {
         if (n_actual != null) {
             priv_imprimir(n_actual.izq);
             System.out.print(n_actual.dato + " ");
@@ -95,7 +97,7 @@ public class arbol {
     }
 
     // busca un elemento dato en el arbol
-    private NodoBST priv_buscar(NodoBST n_actual, Integer dato) {
+    private NodoBST<T> priv_buscar(NodoBST<T> n_actual, T dato) {
         if (n_actual == null) // dato no se encuentra en el arbol
             return null;
 
@@ -110,37 +112,81 @@ public class arbol {
     }
 
     // Longitud de camino interno
-    private int priv_lci(NodoBST nodo, int nivel) {
+    private int priv_lci(NodoBST<T> nodo, int nivel) {
         if (nodo == null)
             return 0;
         else
             return nivel + priv_lci(nodo.izq, nivel + 1) + priv_lci(nodo.der, nivel + 1);
     }
 
-    private void inorden(NodoBST nodo, ArrayList<NodoBST> lista) {
+    // recorre inorden y guarda los nodos en el atributo "lista"
+    private void inorden(NodoBST<T> nodo) {
         if (nodo.izq != null) {
-            inorden(nodo.izq, lista);
+            inorden(nodo.izq);
         }
 
         if (nodo != null) {
-            lista.add(nodo);
+            lista.add(nodo.dato);
         }
 
         if (nodo.der != null) {
-            inorden(nodo.der, lista);
+            inorden(nodo.der);
         }
     }
 
-    // retorna el k esimo mas pequeno
-    static public NodoBST claves(arbol arbol, int k) {
-        ArrayList<NodoBST> aux = new ArrayList<>();
-        arbol.inorden(arbol.raiz, aux);
+    public class iteratorImplem implements Iterator<Object> {
+        int count = 0;
 
-        return aux.get(k-1);
+        public boolean hasNext() {
+            if (lista.size() > count) {
+                return true;
+            }
+            return false;
+        }
+
+        public Object next() {
+            Object aux = lista.get(count);
+            count++;
+            return aux;
+        }
+    }
+
+    public Iterator<Object> iterator() {
+        lista = new ArrayList<>();
+        inorden(raiz);
+        return new iteratorImplem();
+    }
+
+    public ArrayList<T> claves(Integer min,Integer max) throws Exception{
+        if (min > max) {
+            throw new Exception("Claves invalidas");
+        }
+
+        if (min < 0 && max < 0 ) {
+            throw new Exception("Claves invalidas");
+        }
+
+        lista = new ArrayList<>();
+        inorden(raiz);
+
+        ArrayList<T> aux = new ArrayList<>();
+        for (int i = 0; i < max; i++) {
+            aux.add(lista.get(i));
+        } 
+        return aux;
+    }
+
+    public T menorConClave(int clave) throws Exception{
+        // conseguir la lista de elementos
+        inorden(raiz);
+        if (clave < 0 || clave > lista.size()) {
+            throw new Exception("clave invalida");
+        }
+        return lista.get(clave-1); // retornar el k-esimo elemento mas pequeno
     }
 
     public static void main(String[] args) {
-        arbol nuevo = new arbol();
+        arbol<Integer> nuevo = new arbol<>();
 
         nuevo.agregar(5);
         nuevo.agregar(2);
@@ -152,6 +198,8 @@ public class arbol {
 
         // nuevo.imprimir();
 
-        System.out.println(arbol.claves(nuevo, 5).dato);
+        for (Object var : nuevo) {
+            System.out.print(var);
+        }
     }
 }

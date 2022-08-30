@@ -119,6 +119,7 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
             return nivel + priv_lci(nodo.izq, nivel + 1) + priv_lci(nodo.der, nivel + 1);
     }
 
+    // recorre inorden y guarda los nodos en el atributo "lista"
     private void inorden(NodoBST<T> nodo) {
         if (nodo.izq != null) {
             inorden(nodo.izq);
@@ -156,7 +157,7 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
         return new iteratorImplem();
     }
 
-    public ArrayList<NodoBST<T>> claves(Integer min,Integer max) throws Exception{
+    public ArrayList<T> claves(Integer min,Integer max) throws Exception{
         if (min > max) {
             throw new Exception("Claves invalidas");
         }
@@ -168,13 +169,11 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
         lista = new ArrayList<>();
         inorden(raiz);
 
-        ArrayList<Integer> aux = new ArrayList<>();
-        for (T var : lista) {
-            if (var.compareTo(max) && var.compareTo(min) == 1 || var.compareTo(min) == 0 || var.compareTo(max) == 0) {
-                
-            }
-        }
-        return null;
+        ArrayList<T> aux = new ArrayList<>();
+        for (int i = 0; i < max; i++) {
+            aux.add(lista.get(i));
+        } 
+        return aux;
     }
 
     public static void main(String[] args) {
