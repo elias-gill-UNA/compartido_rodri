@@ -17,7 +17,7 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
 
     private NodoBST<T> raiz = null;
     private ArrayList<T> lista = new ArrayList<>();
-
+    private int cantidad_nodos=0;
     // clase que representa un nodo del arbol
     private class NodoBST<E> {
 
@@ -49,6 +49,7 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
     /* Agregar un dato al arbol */
     public void agregar(T dato) {
         raiz = priv_agregar(raiz, dato);
+        cantidad_nodos++;
     }
 
     // Retorna el "nodo" donde se encuentra la primera ocurrencia del dato buscado
@@ -190,6 +191,7 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
     */
     public void agregar_nodo_iterable(T dato) {
         NodoBST<T> nuevo = new NodoBST(dato);
+        
         if (raiz == null) {
             raiz = nuevo;
         } else {
@@ -202,18 +204,40 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
                     aux = aux.izq;
                     if (aux == null) {
                         padre.izq = nuevo;
-                        return;
+                        break;
                     }
                 } else {
                     aux = aux.der;
                     if (aux == null) {
                         padre.der = nuevo;
-                        return;
+                        break;
                     }
                 }
             }
-
         }
+        cantidad_nodos++;
+    }
+    
+    public void cant_hojas(){
+        int c=0;
+        for(Object elemento:this){
+            NodoBST<T> aux=new NodoBST(elemento);
+            if(aux.der==null && aux.izq==null){
+                c++;
+            }
+        }
+        System.out.println("Cantidad nodo hojas del arbol");
+        System.out.println(c);
+    }
+    private int altura_arbol(NodoBST nodo){
+        if (nodo==null){
+            return 0;
+        }
+        return 1+Math.max(altura_arbol(nodo.izq),altura_arbol(nodo.der));
+    }
+    public int altura_del_arbol(){
+        int h=altura_arbol(raiz);
+        return h;
     }
     public void eliminar_iterable(T dato) {
         NodoBST<T> nuevo = new NodoBST(dato);
@@ -231,7 +255,7 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
                 aux = aux.der;
             }//Fin del Mientras que Busca el dato a Eliminar
         }
-
+        
         //Comprobacion de los casos de eliminacion
         if (aux.izq == null && aux.der == null) { // es una hoja
             if (esHijoIzq) {
@@ -268,8 +292,24 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
             }
 
         }
+        cantidad_nodos--;
     }
-    
+    public boolean esLLeno(){
+        int k=altura_del_arbol();
+        if ((2*k)-1==cantidad_nodos) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public boolean esCompleto(){
+        int k=altura_del_arbol();
+        if (((Math.pow(2, k))-1)==cantidad_nodos) {
+            return true;
+        } else{
+            return false;
+        }
+    }
      
     public static void main(String[] args) {
         arbol<Integer> nuevo = new arbol<>();
@@ -278,13 +318,14 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
         nuevo.agregar(1);
         nuevo.agregar(2);
         nuevo.agregar(4);
+        nuevo.agregar(9);
         nuevo.agregar(8);
         nuevo.agregar(7);
-        nuevo.agregar(9);
         nuevo.imprimir();
-        nuevo.eliminar_iterable(5);
-        nuevo.eliminar_iterable(9);
-        nuevo.imprimir();
+        nuevo.cant_hojas();
+       System.out.println(nuevo.esLLeno());
+       System.out.println(nuevo.esCompleto());
+       
         
         
         /*
