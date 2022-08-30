@@ -162,7 +162,7 @@ public class arbol {
 
     public static void main(String[] args) {
         arbol nuevo = new arbol();
-
+        arbol navidad=new arbol();
         nuevo.agregar(5);
         nuevo.agregar(2);
         nuevo.agregar(1);
@@ -170,9 +170,17 @@ public class arbol {
         nuevo.agregar(8);
         nuevo.agregar(7);
         nuevo.agregar(9);
-
+        navidad.agregar(10);
+        navidad.agregar(9);
+        navidad.agregar(87);
+        navidad.agregar(25);
+        navidad.agregar(15);
+        navidad.agregar(12);
         nuevo.imprimir();
+        navidad.imprimir();
         arbol aux = arbol.Acc_greater(nuevo);
+        arbol aux2=arbol.Acc_greater(navidad);
+        aux2.imprimir();
         aux.imprimir();
 
     }
