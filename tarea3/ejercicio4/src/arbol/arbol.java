@@ -193,9 +193,21 @@ public class arbol {
         nuevo2.agregar(8);
         nuevo2.agregar(7);
         nuevo2.agregar(9);
-
+        arbol nuevo3=new arbol();
+        nuevo3.agregar(12);
+        nuevo3.agregar(15);
+        nuevo3.agregar(21);
+        nuevo3.agregar(45);
+        nuevo3.agregar(36);
+        nuevo3.agregar(40);
+        
         try {
             System.out.println(arbol.compararArboles(nuevo2, nuevo));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+         try {
+            System.out.println(arbol.compararArboles(nuevo3, nuevo2));
         } catch (Exception e) {
             System.out.println(e);
         }
