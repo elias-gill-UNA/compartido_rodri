@@ -157,12 +157,12 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
         return new iteratorImplem();
     }
 
-    public ArrayList<T> claves(Integer min,Integer max) throws Exception{
+    public ArrayList<T> claves(Integer min, Integer max) throws Exception {
         if (min > max) {
             throw new Exception("Claves invalidas");
         }
 
-        if (min < 0 && max < 0 ) {
+        if (min < 0 && max < 0) {
             throw new Exception("Claves invalidas");
         }
 
@@ -172,17 +172,17 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
         ArrayList<T> aux = new ArrayList<>();
         for (int i = 0; i < max; i++) {
             aux.add(lista.get(i));
-        } 
+        }
         return aux;
     }
 
-    public T menorConClave(int clave) throws Exception{
+    public T menorConClave(int clave) throws Exception {
         // conseguir la lista de elementos
         inorden(raiz);
         if (clave < 0 || clave > lista.size()) {
             throw new Exception("clave invalida");
         }
-        return lista.get(clave-1); // retornar el k-esimo elemento mas pequeno
+        return lista.get(clave - 1); // retornar el k-esimo elemento mas pequeno
     }
 
     public static void main(String[] args) {
@@ -196,10 +196,26 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
         nuevo.agregar(7);
         nuevo.agregar(9);
 
-        // nuevo.imprimir();
+        try {
+            System.out.println(nuevo.menorConClave(1));
+        } catch (Exception e) {
+            // no hacer nada
+        }
 
-        for (Object var : nuevo) {
-            System.out.print(var);
+        arbol<String> nuevo2 = new arbol<>();
+
+        nuevo2.agregar("a");
+        nuevo2.agregar("b");
+        nuevo2.agregar("c");
+        nuevo2.agregar("d");
+        nuevo2.agregar("w");
+        nuevo2.agregar("e");
+        nuevo2.agregar("f");
+
+        try {
+            System.out.println(nuevo2.menorConClave(3));
+        } catch (Exception e) {
+            // no hacer nada
         }
     }
 }

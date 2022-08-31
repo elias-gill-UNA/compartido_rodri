@@ -157,12 +157,18 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
         return new iteratorImplem();
     }
 
-    public ArrayList<T> claves(Integer min,Integer max) throws Exception{
+    /**
+     * @param min
+     * @param max
+     * @return ArrayList con los elementos en el rango [min, max] conforme al
+     *         recorrido en inorden del arbol.
+     */
+    public ArrayList<T> claves(Integer min, Integer max) throws Exception {
         if (min > max) {
             throw new Exception("Claves invalidas");
         }
 
-        if (min < 0 && max < 0 ) {
+        if (min < 0 && max < 0) {
             throw new Exception("Claves invalidas");
         }
 
@@ -172,7 +178,7 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
         ArrayList<T> aux = new ArrayList<>();
         for (int i = 0; i < max; i++) {
             aux.add(lista.get(i));
-        } 
+        }
         return aux;
     }
 
@@ -191,6 +197,15 @@ public class arbol<T extends Comparable<T>> implements Iterable<Object> {
 
         for (Object var : nuevo) {
             System.out.print(var);
+        }
+
+        // prueba de iterable con claves 
+        try {
+            for (Integer var : nuevo.claves(2, 3)) {
+                System.out.println(var);
+            }
+        } catch (Exception e) {
+            // hacer nada
         }
     }
 }
