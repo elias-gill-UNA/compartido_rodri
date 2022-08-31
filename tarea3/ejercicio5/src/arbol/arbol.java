@@ -169,7 +169,7 @@ public class arbol {
         } else {
             return masIzquierda(nodo.izq, nodo.dato);
         }
-	}
+    }
 
     // recorrer los mas a la derecha del arbol
     private int masDerecha(NodoBST nodo, int ultimo) {
@@ -178,9 +178,9 @@ public class arbol {
         } else {
             return masDerecha(nodo.der, nodo.dato);
         }
-	}
+    }
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
         arbol nuevo = new arbol();
         nuevo.agregar(5);
         nuevo.agregar(2);
@@ -189,6 +189,7 @@ public class arbol {
         nuevo.agregar(1);
         nuevo.agregar(7);
         nuevo.agregar(9);
+
         System.out.println(nuevo.subarboles(4, 2));
         System.out.println(nuevo.subarboles(1, 5));
         System.out.println(nuevo.subarboles(8, 7));

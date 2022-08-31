@@ -1,5 +1,4 @@
 package arbol;
-
 import java.util.ArrayList;
 
 /*
@@ -116,12 +115,20 @@ public class arbol {
         }
     }
 
-    // retorna el k esimo mas pequeno
+    /**
+     * @param arbolA
+     * @param arbolB
+     * @return Compara dos arboles y retorna 1 si los arboles son identicos, retorna
+     *         2
+     *         cuando tienen los mismos valores pero con distinta forma y retorna 3
+     *         cuando son arboles distintos
+     * @throws Exception
+     */
     static public int compararArboles(arbol arbolA, arbol arbolB) throws Exception {
         // determinar que no sean la misma instancia
-        if (arbolA == arbolB) { 
+        if (arbolA == arbolB) {
             throw new Exception("Es la misma instancia");
-        } 
+        }
 
         // cargar el arbol A como lista con inorden
         ArrayList<NodoBST> a = new ArrayList<>(); // 1
@@ -133,44 +140,56 @@ public class arbol {
 
         // arrays de diferente tamano implica arboles distintos
         if (b.size() != a.size()) { // 3
-            return 3; 
+            return 3;
         }
-        
-        // Ya tenemos la seguridad de que n1 y n2 tienen el mismo largo, por ende 
+
+        // Ya tenemos la seguridad de que n1 y n2 tienen el mismo largo, por ende
         // en el peor de los casos n1+n2 = 2n
         boolean forma = true; // 1
         for (int i = 0; i < a.size(); i++) { // n+1
-            NodoBST aux = a.get(i); // n 
+            NodoBST aux = a.get(i); // n
             NodoBST aux2 = b.get(i); // n
+
             // distintos es valor
             if (aux.dato != aux2.dato) { // n
                 // retorna el caso 3
                 return 3;
             }
 
-            // si sus hijos no son iguales, distintos en forma
+            // si ambos tienen un hijo por izquierda, entonces 
+            // comparamos dichos hijos, si son distintos entonces la forma del
+            // arbol es distinta
             if (aux.izq != null && aux2.izq != null) { // 2n
                 if (aux.izq.dato != aux2.izq.dato) { // n
                     forma = false; // n
                 }
+            } else if ((aux.izq != null && aux2.izq == null) || 
+                    (aux.izq == null && aux2.izq != null)) { // 4n
+                forma = false; // n
             }
 
-            // comparar hijos por derecha (forma)
+            // Ahora por derecha de la misma forma
             if (aux.der != null && aux2.der != null) { // 2n
                 if (aux.der.dato != aux2.der.dato) { // n
                     forma = false; // n
                 }
+            } else if ((aux.der != null && aux2.der == null) || 
+                    (aux.der == null && aux2.der != null)) { // 4n
+                forma = false; // n
             }
         }
+
         // retorna el caso 1 si son iguales y 2 si son diferentes de forma
         return forma == true ? 1 : 2; // 1
-        
+
         // CALCULO FINAL: PEOR CASO
-        // t(n) = 13n + 6, en terminos de O grande: O(n) donde n es la cantidad de nodos de cualquiera
-        // de los dos arboles
-        
+        // t(n) = 24n + 6, en terminos de O grande: O(n) donde n es la cantidad de nodos
+        // de cualquiera de los dos arboles, ya que en el peor caso estos son iguales
+        // y por ende tienen el mismo largo 
+
         // CALCULO FINAL: Mejor caso
-        // Ignorando el caso donde la referencia es la misma, el mejor caso es cuando los tamanos son distintos,
+        // Ignorando el caso donde la referencia es la misma, el mejor caso es cuando
+        // los tamanos son distintos,
         // Es decir, los arboles son distintos
         // t(n) = n1+n2 + 5, en terminos de O grande: O(h) donde h = n1+n2
     }
@@ -179,9 +198,9 @@ public class arbol {
         arbol nuevo = new arbol();
         nuevo.agregar(5);
         nuevo.agregar(2);
+        nuevo.agregar(1);
         nuevo.agregar(4);
         nuevo.agregar(8);
-        nuevo.agregar(1);
         nuevo.agregar(7);
         nuevo.agregar(9);
 
@@ -193,21 +212,38 @@ public class arbol {
         nuevo2.agregar(8);
         nuevo2.agregar(7);
         nuevo2.agregar(9);
-        arbol nuevo3=new arbol();
+
+        arbol nuevo4 = new arbol();
+        nuevo4.agregar(2);
+        nuevo4.agregar(5);
+        nuevo4.agregar(1);
+        nuevo4.agregar(8);
+        nuevo4.agregar(4);
+        nuevo4.agregar(7);
+        nuevo4.agregar(9);
+
+        arbol nuevo3 = new arbol();
         nuevo3.agregar(12);
         nuevo3.agregar(15);
         nuevo3.agregar(21);
         nuevo3.agregar(45);
         nuevo3.agregar(36);
         nuevo3.agregar(40);
-        
+
         try {
             System.out.println(arbol.compararArboles(nuevo2, nuevo));
         } catch (Exception e) {
             System.out.println(e);
         }
-         try {
+
+        try {
             System.out.println(arbol.compararArboles(nuevo3, nuevo2));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        try {
+            System.out.println(arbol.compararArboles(nuevo4, nuevo));
         } catch (Exception e) {
             System.out.println(e);
         }

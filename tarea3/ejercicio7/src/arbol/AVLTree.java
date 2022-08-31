@@ -1,8 +1,9 @@
 package arbol;
+
 /**
  *
  * @author fires
- *         blog: http://proyectosbeta.blogspot.com/
+ *  blog: http://proyectosbeta.blogspot.com/
  */
 public class AVLTree {
     private AVLNode root;
@@ -83,7 +84,7 @@ public class AVLTree {
     private void imprimir(AVLNode nodo) {
         if (nodo != null) {
             imprimir(nodo.derecho);
-          
+
             imprimir(nodo.izquierdo);
         }
     }
@@ -167,6 +168,7 @@ public class AVLTree {
                 cola[i + 1] = cola[x].derecho;
             }
         }
+
         nivel = 0;
         int cont = 0; // contador para cada nivel
         int cantidad = 1; // cantidad de nodos por nivel
