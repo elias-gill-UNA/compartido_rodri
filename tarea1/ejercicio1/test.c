@@ -5,7 +5,6 @@ int main () {
     Lista *lista1 = nuevaLista();
     Lista *lista2 = nuevaLista();
 
-
     Dato *dato1 = nuevoDatoCadena("lista interior");
     agregarElemento(lista2, dato1);
 
