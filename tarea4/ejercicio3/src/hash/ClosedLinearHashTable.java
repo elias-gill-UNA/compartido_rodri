@@ -6,14 +6,14 @@ public class ClosedLinearHashTable<E> {
     private int tableSize = 100;
     private int elements = 0;
     private ArrayList<El<E>> table = new ArrayList<>(tableSize);
-	private int factorDeCarga;
+	private double factorDeCarga;
 
     public int getTableSize() {
         return tableSize;
     }
 
     // crear la tabla de hash vacia
-    public ClosedLinearHashTable(int factorDeCarga) {
+    public ClosedLinearHashTable(double factorDeCarga) {
         for (int i = 0; i < tableSize; i++) {
             table.add(null);
         }
@@ -21,7 +21,7 @@ public class ClosedLinearHashTable<E> {
     }
 
     // crear la tabla de hash vacia
-    public ClosedLinearHashTable(int factorDeCarga, int size) {
+    public ClosedLinearHashTable(double factorDeCarga, int size) {
         for (int i = 0; i < tableSize; i++) {
             table.add(null);
         }
@@ -120,5 +120,4 @@ public class ClosedLinearHashTable<E> {
             this.status = value;
         }
     }
-
 }
