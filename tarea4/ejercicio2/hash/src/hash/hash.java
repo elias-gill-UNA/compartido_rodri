@@ -6,10 +6,8 @@
 package hash;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Scanner;
 
 /**
  *
@@ -22,32 +20,32 @@ public class hash {
      */
     public static void main(String[] args) throws FileNotFoundException {
         int claves[] = new int[1000];
-        int R = 37;
+        int R = 64;
+
         try {
             BufferedReader file = new BufferedReader(
-                    new FileReader("C:/Users/Admin/Documents/NetBeansProjects/hash/es-ES.dic"));
+                    new FileReader("/home/elias/Documentos/compartido_rodri/tarea4/es_ES.dic"));
 
             // leer las lineas del archivo
             String currentLine = file.readLine();
-            for(int i=0;i<10000;i++){
-                //System.out.println(currentLine);
+            for (int i = 0; i < 10000; i++) {
+                // System.out.println(currentLine);
                 currentLine = file.readLine();
-                currentLine = file.readLine();
-                
+
                 int hash_value = 0;
                 for (int k = 1; k < currentLine.length(); k *= 2) {
                     hash_value = hash_value * R + (currentLine.charAt(k - 1));
-                    claves[hash_value%1000]++;
+                    claves[Math.abs(hash_value % 1000)]++;
                 }
             }
-            for(int entero:claves){
+            for (int entero : claves) {
                 System.out.println(entero);
             }
 
             file.close();
 
         } catch (Exception e) {
-            System.out.println("file does not exist");
+            System.out.println(e);
         }
     }
 }
