@@ -22,11 +22,11 @@ public class ClosedCuadraticHashTable<E> {
 
     // crear la tabla de hash vacia
     public ClosedCuadraticHashTable(double factorDeCarga, int size) {
+        this.tableSize = size;
         for (int i = 0; i < tableSize; i++) {
             table.add(null);
         }
         this.factorDeCarga = factorDeCarga;
-        this.tableSize = size;
     }
 
     // anadir nuevo elemento
@@ -102,7 +102,7 @@ public class ClosedCuadraticHashTable<E> {
             int i = 0;
             boolean encontrado = true;
             // revisar sus divisores
-            while (i < n/2+1 && !encontrado) {
+            while (i < n / 2 + 1 && !encontrado) {
                 if (n % k == 0) {
                     encontrado = false;
                 }
@@ -143,5 +143,29 @@ public class ClosedCuadraticHashTable<E> {
         public El(boolean value) {
             this.status = value;
         }
+    }
+
+    public int[] agrupamientos() {
+        // crear un array auxiliar para los agrupamientos
+        int[] aux = new int[tableSize];
+        for (int i = 0; i < tableSize; i++) {
+            aux[i] = 0;
+        }
+
+        // contador
+        int counter = 0;
+        boolean cluster = false;
+        for (int i = 0; i < tableSize; i++) {
+            if (table.get(i) != null && table.get(i).status) {
+                counter++;
+                cluster = true;
+            } else if (cluster == true) {
+                aux[counter - 1]++;
+                counter = 0;
+                cluster = false;
+            } 
+        }
+
+        return aux;
     }
 }

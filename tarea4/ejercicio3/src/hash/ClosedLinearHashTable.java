@@ -6,7 +6,7 @@ public class ClosedLinearHashTable<E> {
     private int tableSize = 100;
     private int elements = 0;
     private ArrayList<El<E>> table = new ArrayList<>(tableSize);
-	private double factorDeCarga;
+    private double factorDeCarga;
 
     public int getTableSize() {
         return tableSize;
@@ -22,11 +22,11 @@ public class ClosedLinearHashTable<E> {
 
     // crear la tabla de hash vacia
     public ClosedLinearHashTable(double factorDeCarga, int size) {
+        this.tableSize = size;
         for (int i = 0; i < tableSize; i++) {
             table.add(null);
         }
         this.factorDeCarga = factorDeCarga;
-        this.tableSize = size;
     }
 
     // anadir nuevo elemento
@@ -52,7 +52,8 @@ public class ClosedLinearHashTable<E> {
     }
 
     // buscar un elemento dentro de la tabla
-    // Retornar una clase "Res" la cual cuenta con el status de la busqueda (boolean)
+    // Retornar una clase "Res" la cual cuenta con el status de la busqueda
+    // (boolean)
     // y el indice de haber sido encontrado. Ejemplo Res{status: true, index: 20}
     public Res search(E value) {
         for (int i = 0; i < tableSize; i++) {
@@ -108,16 +109,41 @@ public class ClosedLinearHashTable<E> {
             this.index = -1;
         }
     }
-    private class El<T>{
+
+    private class El<T> {
         E value;
         boolean status = true; // borrado o disponible
 
-        public El (E value) {
+        public El(E value) {
             this.value = value;
         }
 
-        public El (boolean value) {
+        public El(boolean value) {
             this.status = value;
         }
+    }
+
+    public int[] agrupamientos() {
+        // crear un array auxiliar para los agrupamientos
+        int[] aux = new int[tableSize];
+        for (int i = 0; i < tableSize; i++) {
+            aux[i] = 0;
+        }
+
+        // contador
+        int counter = 0;
+        boolean cluster = false;
+        for (int i = 0; i < tableSize; i++) {
+            if (table.get(i) != null && table.get(i).status) {
+                counter++;
+                cluster = true;
+            } else if (cluster == true) {
+                aux[counter - 1]++;
+                counter = 0;
+                cluster = false;
+            }
+        }
+
+        return aux;
     }
 }

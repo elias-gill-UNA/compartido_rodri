@@ -1,0 +1,149 @@
+      Tiempos anadir 
+      ------------------------------------------------------------------------- 
+         Lineal           Cuadratica           Doble hash              Abierta 
+       1559047901           1314299480            365711318             59758476
+      
+      Tiempos eliminacion 
+      ------------------------------------------------------------------------- 
+         Lineal           Cuadratica           Doble hash              Abierta
+      27745777           51889811           35139082             77292947
+      
+      Tiempos busqueda
+      ------------------------------------------------------------------------- 
+         Lineal           Cuadratica           Doble hash           Abierta 
+        20647429         17971530             31693761             53019834
+                 
+
+
+    Agrupamiento lineal
+      
+      Cluster:    2	       Veces: 4796
+      Cluster:    3	       Veces: 2818
+      Cluster:    4	       Veces: 1589
+      Cluster:    5	       Veces: 1103
+      Cluster:    6	       Veces:  728
+      Cluster:    7	       Veces:  536
+      Cluster:    8	       Veces:  392
+      Cluster:    9	       Veces:  348
+      Cluster:   10	       Veces:  229
+      Cluster:   11	       Veces:  172
+      Cluster:   12	       Veces:  138
+      Cluster:   13	       Veces:  106
+      Cluster:   14	       Veces:   73
+      Cluster:   15	       Veces:   83
+      Cluster:   16	       Veces:   52
+      Cluster:   17	       Veces:   39
+      Cluster:   18	       Veces:   40
+      Cluster:   19	       Veces:   33
+      Cluster:   20	       Veces:   26
+      Cluster:   21	       Veces:   19
+      Cluster:   22	       Veces:   16
+      Cluster:   23	       Veces:   10
+      Cluster:   24	       Veces:   14
+      Cluster:   25	       Veces:   12
+      Cluster:   26	       Veces:   15
+      Cluster:   27	       Veces:   10
+      Cluster:   28	       Veces:   11
+      Cluster:   29	       Veces:    8
+      Cluster:   30	       Veces:   11
+      Cluster:   31	       Veces:    3
+      Cluster:   32	       Veces:    3
+      Cluster:   33	       Veces:    6
+      Cluster:   34	       Veces:    3
+      Cluster:   35	       Veces:    1
+      Cluster:   36	       Veces:    5
+      Cluster:   37	       Veces:    1
+      Cluster:   38	       Veces:    2
+      Cluster:   40	       Veces:    3
+      Cluster:   41	       Veces:    2
+      Cluster:   42	       Veces:    2
+      Cluster:   44	       Veces:    1
+      Cluster:   45	       Veces:    1
+      Cluster:   46	       Veces:    1
+      Cluster:   48	       Veces:    2
+      Cluster:   50	       Veces:    1
+      Cluster:   51	       Veces:    1
+      Cluster:   53	       Veces:    1
+      Cluster:   71	       Veces:    1
+      
+   Agrupamiento cuadratico
+
+      Cluster:    2	       Veces: 6431
+      Cluster:    3	       Veces: 2983
+      Cluster:    4	       Veces: 1918
+      Cluster:    5	       Veces: 1143
+      Cluster:    6	       Veces:  590
+      Cluster:    7	       Veces:  356
+      Cluster:    8	       Veces:  323
+      Cluster:    9	       Veces:  284
+      Cluster:   10	       Veces:  163
+      Cluster:   11	       Veces:  118
+      Cluster:   12	       Veces:  129
+      Cluster:   13	       Veces:  106
+      Cluster:   14	       Veces:   72
+      Cluster:   15	       Veces:   34
+      Cluster:   16	       Veces:   48
+      Cluster:   17	       Veces:   44
+      Cluster:   18	       Veces:   18
+      Cluster:   19	       Veces:   18
+      Cluster:   20	       Veces:   26
+      Cluster:   21	       Veces:   14
+      Cluster:   22	       Veces:   17
+      Cluster:   23	       Veces:    9
+      Cluster:   24	       Veces:   14
+      Cluster:   25	       Veces:   10
+      Cluster:   26	       Veces:   13
+      Cluster:   27	       Veces:    7
+      Cluster:   28	       Veces:    6
+      Cluster:   29	       Veces:    4
+      Cluster:   30	       Veces:    7
+      Cluster:   31	       Veces:    3
+      Cluster:   32	       Veces:    4
+      Cluster:   33	       Veces:    5
+      Cluster:   34	       Veces:    4
+      Cluster:   35	       Veces:    1
+      Cluster:   36	       Veces:    3
+      Cluster:   37	       Veces:    2
+      Cluster:   38	       Veces:    1
+      Cluster:   39	       Veces:    2
+      Cluster:   40	       Veces:    1
+      Cluster:   41	       Veces:    1
+      Cluster:   43	       Veces:    1
+      Cluster:   44	       Veces:    3
+      Cluster:   45	       Veces:    2
+      Cluster:   48	       Veces:    1
+      Cluster:   49	       Veces:    2
+      Cluster:   51	       Veces:    1
+      Cluster:   52	       Veces:    1
+      Cluster:   54	       Veces:    1
+      Cluster:   71	       Veces:    1
+      
+    Agrupmiento doble hash
+     
+      Cluster:    2	       Veces: 7590
+      Cluster:    3	       Veces: 4240
+      Cluster:    4	       Veces: 2221
+      Cluster:    5	       Veces: 1259
+      Cluster:    6	       Veces:  725
+      Cluster:    7	       Veces:  454
+      Cluster:    8	       Veces:  278
+      Cluster:    9	       Veces:  165
+      Cluster:   10	       Veces:   78
+      Cluster:   11	       Veces:   53
+      Cluster:   12	       Veces:   53
+      Cluster:   13	       Veces:   24
+      Cluster:   14	       Veces:   20
+      Cluster:   15	       Veces:   18
+      Cluster:   16	       Veces:   15
+      Cluster:   17	       Veces:   10
+      Cluster:   18	       Veces:    6
+      Cluster:   19	       Veces:    5
+      Cluster:   20	       Veces:    2
+      Cluster:   21	       Veces:    1
+      Cluster:   23	       Veces:    5
+      Cluster:   24	       Veces:    1
+      Cluster:   26	       Veces:    1
+      Cluster:   28	       Veces:    1
+      Cluster:   29	       Veces:    1
+      Cluster:   32	       Veces:    1
+      Cluster:   34	       Veces:    1

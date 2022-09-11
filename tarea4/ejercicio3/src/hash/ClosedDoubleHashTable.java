@@ -6,7 +6,7 @@ public class ClosedDoubleHashTable<E> {
     private int tableSize = 100;
     private int elements = 0;
     private ArrayList<El<E>> table = new ArrayList<>(tableSize);
-	private double factorDeCarga;
+    private double factorDeCarga;
 
     public int getTableSize() {
         return tableSize;
@@ -22,11 +22,11 @@ public class ClosedDoubleHashTable<E> {
 
     // crear la tabla de hash vacia
     public ClosedDoubleHashTable(double factorDeCarga, int size) {
+        this.tableSize = size;
         for (int i = 0; i < tableSize; i++) {
             table.add(null);
         }
         this.factorDeCarga = factorDeCarga;
-        this.tableSize = size;
     }
 
     // anadir nuevo elemento
@@ -37,7 +37,7 @@ public class ClosedDoubleHashTable<E> {
 
         // exploracion lineal
         for (int i = 0; i < tableSize; i++) {
-            int hash = Math.abs(value.hashCode() + i*secondaryHash(value)) % tableSize;
+            int hash = Math.abs(value.hashCode() + i * secondaryHash(value)) % tableSize;
             if (table.get(hash) == null || table.get(hash).status == false) {
                 table.set(hash, new El<E>(value));
                 elements++;
@@ -52,7 +52,8 @@ public class ClosedDoubleHashTable<E> {
     }
 
     // buscar un elemento dentro de la tabla
-    // Retornar una clase "Res" la cual cuenta con el status de la busqueda (boolean)
+    // Retornar una clase "Res" la cual cuenta con el status de la busqueda
+    // (boolean)
     // y el indice de haber sido encontrado. Ejemplo Res{status: true, index: 20}
     public Res search(E value) {
         for (int i = 0; i < tableSize; i++) {
@@ -68,12 +69,17 @@ public class ClosedDoubleHashTable<E> {
         return new Res(false);
     }
 
-    // metodo secundario de hasheo
+    /*
+     * metodo secundario de hasheo
+     * Codigo extraido del libro "Introduccion a los algoritmos" de Thomas Cormen
+     * Edicion 2009. Paginas 272 y 273
+     */
     private int secondaryHash(E value) {
-		return 0;
-	}
+        int hash = Math.abs(value.hashCode()) % (tableSize - 1);
+        return hash + 1;
+    }
 
-	// anadir nuevo elemento
+    // anadir nuevo elemento
     public void delete(E value) {
         Res s = search(value);
         if (s.status == true) {
@@ -113,16 +119,41 @@ public class ClosedDoubleHashTable<E> {
             this.index = -1;
         }
     }
-    private class El<T>{
+
+    private class El<T> {
         E value;
         boolean status = true; // borrado o disponible
 
-        public El (E value) {
+        public El(E value) {
             this.value = value;
         }
 
-        public El (boolean value) {
+        public El(boolean value) {
             this.status = value;
         }
+    }
+
+    public int[] agrupamientos() {
+        // crear un array auxiliar para los agrupamientos
+        int[] aux = new int[tableSize];
+        for (int i = 0; i < tableSize; i++) {
+            aux[i] = 0;
+        }
+
+        // contador
+        int counter = 0;
+        boolean cluster = false;
+        for (int i = 0; i < tableSize; i++) {
+            if (table.get(i) != null && table.get(i).status) {
+                counter++;
+                cluster = true;
+            } else if (cluster == true) {
+                aux[counter - 1]++;
+                counter = 0;
+                cluster = false;
+            }
+        }
+
+        return aux;
     }
 }

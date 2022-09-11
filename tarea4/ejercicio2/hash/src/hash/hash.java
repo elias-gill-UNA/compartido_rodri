@@ -28,18 +28,14 @@ public class hash {
 
             // leer las lineas del archivo
             String currentLine = file.readLine();
-            for (int i = 0; i < 10000; i++) {
-                // System.out.println(currentLine);
-                currentLine = file.readLine();
+            while (currentLine != null) {
+                currentLine = file.readLine().split("/")[0];
 
                 int hash_value = 0;
                 for (int k = 1; k < currentLine.length(); k *= 2) {
                     hash_value = hash_value * R + (currentLine.charAt(k - 1));
-                    claves[Math.abs(hash_value % 1000)]++;
                 }
-            }
-            for (int entero : claves) {
-                System.out.println(entero);
+                claves[Math.abs(hash_value % 1000)]++;
             }
 
             file.close();
@@ -47,5 +43,11 @@ public class hash {
         } catch (Exception e) {
             System.out.println(e);
         }
+
+        // imprimir los resultados
+        for (int entero : claves) {
+            System.out.println(entero);
+        }
+
     }
 }
