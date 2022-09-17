@@ -1,4 +1,3 @@
-package cadena;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -6,12 +5,27 @@ public class Cadena {
 
     public static void main(String[] args) {
         HashMap<String, Boolean> diccionario = new HashMap<>();
-        diccionario.put("Holamundo", true);
-        diccionario.put("Holamundo", true);
-        diccionario.put("Hola2mundo", true);
-        diccionario.put("hola5", true);
-        diccionario.put("hola", true);
-        String pal = "y1Holamundo";
+
+        try {
+            BufferedReader file = new BufferedReader(
+                    new FileReader("/home/elias/Documentos/compartido_rodri/tarea4/es_ES.dic"));
+
+            // leer las lineas del archivo
+            try {
+                String currentLine = file.readLine().split("/")[0];
+                while (currentLine != null) {
+                    diccionario.put(currentLine);
+                    currentLine = file.readLine().split("/")[0];
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            file.close();
+
+        } catch (Exception e) {
+            System.out.println("No se puede leer el archivo");
+        }
 
         int a = 0;
         if (pal.length() < 8) {
@@ -29,7 +43,5 @@ public class Cadena {
                 System.out.println("La Contraseña es segura");
             }
         }
-
     }
-
 }
