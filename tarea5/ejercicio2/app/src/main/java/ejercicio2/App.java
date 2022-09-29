@@ -24,70 +24,62 @@ import java.util.Arrays;
 
 public class App {
 
-    // Function to perform Radix sort
-    // on String array
+    // funcion que realiza el radix sort sobre un array
     public static void radixSort(String input[],
-            int radix,
-            int width) {
-        for (int i = 0; i < width; i++) {
+                                 int radix,
+                                 int largo) {
+        for (int i = 0; i < largo; i++) {
             performRadixSort(input, i, radix);
         }
     }
 
-    public static void performRadixSort(String input[],
-            int position,
-            int radix) {
+    private static void performRadixSort(String input[],
+                                         int posicion,
+                                         int radix) {
 
-        // Creating a temporary count array
+        // crear un array temporal para el conteo
         int countArray[] = new int[radix];
         int nos = input.length;
 
-        // Populating the count array
+        // rellenando el nuevo array
         for (String value : input) {
-            countArray[getDigit(position,
+            countArray[getDigito(posicion,
                     value, radix)]++;
         }
 
-        // Normalizing count array
+        // normalizar el arreglo
         for (int i = 1; i < radix; i++) {
             countArray[i] = countArray[i]
                     + countArray[i - 1];
         }
 
-        String tempArray[] = new String[nos];
-        // Building the final temporary array
+        String temp[] = new String[nos];
+        // rellendo el arreglo temporal
         for (int i = nos - 1; i >= 0; i--) {
-            tempArray[--countArray[getDigit(
-                    position, input[i], radix)]] = input[i];
+            temp[--countArray[getDigito(
+                    posicion, input[i], radix)]] = input[i];
         }
-        // Copying into the actual array
+        // copiando en un nuevo arreglo
         for (int i = 0; i < nos; i++) {
-            input[i] = tempArray[i];
+            input[i] = temp[i];
         }
     }
 
-    // Hashing the input value, radix = 26
-    // It takes the character at
-    // (length - position) location
-    // and convert it to ascii value and
-    // return the ascii value
-    public static int getDigit(int position,
-            String value,
-            int radix) {
+    // transformando las letras a posiciones del arreglo
+    public static int getDigito(int position,
+                                String value,
+                                int radix) {
         int nos = value.length() - 1;
         char c = value.toLowerCase().charAt(nos - position);
         return (int) c - 97;
     }
 
-    // Driver Code
+    // Ejemplo de prueba
     public static void main(String[] args) {
-        String arr[] = { "BCDEF", "dbaqc", "abcde", "bbbbb" };
+        String arr[] = {"BCDEF", "dbaqc", "abcde", "bbbbb"};
         System.out.println("Input:"
                 + Arrays.toString(arr));
 
-        // Radix is the maximum value from
-        // the input array
-        // For String maximum value is 26
         radixSort(arr, 26, arr[0].length());
         System.out.println("Output:"
                 + Arrays.toString(arr));

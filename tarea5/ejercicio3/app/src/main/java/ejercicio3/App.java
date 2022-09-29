@@ -20,9 +20,9 @@
 */
 package ejercicio3;
 
-class App {
+class App<T> {
     // Funcion para encontrar un elemento en un arreglo circular
-    public static int searchCircularArray(int[] nums, int buscado) {
+    public int searchCircularArray(Comparable[] nums, Comparable<T> buscado) {
         int izquierda = 0;
         int derecha = nums.length - 1;
 
@@ -34,14 +34,14 @@ class App {
             // comparar si es que es igual al valor buscado
             // si el valor es encontrado entonces retorna el indice
             if (buscado == nums[medio]) {
-                return medio; 
+                return medio;
             }
 
             // Si no se ha encontrado el elemento y la mitad derecha esta arreglada
-            if (nums[medio] <= nums[derecha]) {
+            if (nums[medio].compareTo(nums[derecha]) == -1 || nums[medio].compareTo(nums[derecha]) == 0 ) {
                 // comparar con el elemento mas a la derecha para ver si el valor se encuentra
                 // en esa parte
-                if (buscado > nums[medio] && buscado <= nums[derecha]) {
+                if (nums[medio].compareTo(buscado) == -1 && (nums[derecha].compareTo(buscado) == 1 || nums[derecha].compareTo(buscado) == 0)) {
                     // buscar a la derecha
                     izquierda = medio + 1;
                 } else {
@@ -54,12 +54,12 @@ class App {
             else {
                 // comparar con el elemento mas a la izquierda para ver si el valor se encuentra
                 // en esa parte
-                if (buscado >= nums[izquierda] && buscado < nums[medio]) {
+                if ((nums[derecha].compareTo(buscado) == -1 || nums[derecha].compareTo(buscado) == 0) && nums[medio].compareTo(buscado) == 1) {
                     // buscar a la izquierda
                     derecha = medio - 1;
                 } else {
                     // sino buscar a la derecha
-                    izquierda = medio + 1; 
+                    izquierda = medio + 1;
 
                 }
             }
@@ -70,10 +70,11 @@ class App {
     }
 
     public static void main(String[] args) {
-        int[] nums = { 9, 10, 2, 5, 6, 8 };
+        Integer[] nums = { 9, 10, 2, 5, 6, 8 };
         int bus = 9;
 
-        int indice = searchCircularArray(nums, bus);
+        App app = new App();
+        int indice = app.searchCircularArray(nums, bus);
 
         if (indice != -1) {
             System.out.println("Encontrado en el indice: " + indice);
