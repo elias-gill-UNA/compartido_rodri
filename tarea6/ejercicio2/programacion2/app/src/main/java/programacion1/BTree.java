@@ -46,7 +46,7 @@ package programacion1;
 public class BTree<Key extends Comparable<Key>, Value> {
     // max children per B-tree node = M-1
     // (must be even and greater than 2)
-    private static final int M = 4;
+    private static int M = 10;
 
     private Node root; // root of the B-tree
     private int height; // height of the B-tree
@@ -79,9 +79,14 @@ public class BTree<Key extends Comparable<Key>, Value> {
 
     /**
      * Initializes an empty B-tree.
+     * @throws Exception
      */
-    public BTree() {
+    public BTree(int m) throws Exception {
         root = new Node(0);
+        if (m % 2 != 0 || m <= 2) {
+            throw new Exception("Valor invalido de m");
+        }
+        M = m;
     }
 
     /**
