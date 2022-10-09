@@ -1,6 +1,28 @@
+/*
+    Grupo g22
+    Gill Quintana, Elias Sebastian            CI: 5.223.284       Seccion TR
+    Alvarenga Cavallero, Rodrigo              CI: 5.711.576       Seccion TR
+
+    Tarea 6-U4 - Ejercicio II.1
+
+  DECLARACIÓN DE HONOR
+  • Nosotros Elias Gill y Rodrigo Alvarenga:
+
+  • No hemos discutido el código fuente de nuestra tarea con ningún otro
+  grupo, solo con el Profesor o el AER.
+
+  • No hemos usado código obtenido de otro estudiante o de cualquier otra
+  fuente no autorizada, modificada o no modificada.
+
+  • Cualquier código o documentación utilizada en nuestro programa
+  obtenido de fuentes, tales como libros o notas de curso, han sido claramente
+  indicada en nuestra tarea.
+*/
+
 package programacion1;
+
 public class App {
-    
+
     /**
      * Unit tests the {@code BTree} data type.
      *
@@ -37,7 +59,15 @@ public class App {
 
         System.out.println("size:    " + st.size());
         System.out.println("height:  " + st.height());
-        System.out.println(st);
+        // usa metodo toString
+        System.out.println(st + "/n/n --- RangePrint ---");
+
+        // imprimir con el metodo rangePrint
+        try {
+            st.rangePrint("www.apple.com", "www.cs.princeton.edu");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         System.out.println();
     }
 }

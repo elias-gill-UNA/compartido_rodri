@@ -1,0 +1,50 @@
+> Task :app:compileJava
+> Task :app:processResources NO-SOURCE
+> Task :app:classes
+
+> Task :app:run
+cs.princeton.edu:  128.112.136.12
+hardvardsucks.com: null
+simpsons.com:      209.052.165.60
+apple.com:         17.112.152.32
+ebay.com:          66.135.192.87
+dell.com:          143.166.224.230
+
+size:    17
+height:  2
+                www.amazon.com 207.171.182.16
+                www.apple.com 17.112.152.32
+                www.cnn.com 64.236.16.20
+        (www.cs.princeton.edu)
+                www.cs.princeton.edu 128.112.136.12
+                www.cs.princeton.edu 128.112.136.11
+                www.dell.com 143.166.224.230
+(www.ebay.com)
+                www.ebay.com 66.135.192.87
+                www.espn.com 199.181.135.201
+                www.google.com 216.239.41.99
+        (www.microsoft.com)
+                www.microsoft.com 207.126.99.140
+                www.nytimes.com 199.239.136.200
+(www.princeton.edu)
+                www.princeton.edu 128.112.128.15
+                www.simpsons.com 209.052.165.60
+        (www.slashdot.org)
+                www.slashdot.org 66.35.250.151
+                www.weather.com 63.111.66.11
+        (www.yahoo.com)
+                www.yahoo.com 216.109.118.65
+                www.yale.edu 130.132.143.21
+
+/n/n --- RangePrint ---
+          www.apple.com 17.112.152.32
+          www.cnn.com 64.236.16.20
+     (www.cs.princeton.edu)
+          www.cs.princeton.edu 128.112.136.12
+          www.cs.princeton.edu 128.112.136.11
+
+
+
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 2 executed

@@ -1,17 +1,23 @@
-/******************************************************************************
- *  Compilation:  javac BTree.java
- *  Execution:    java BTree
- *  Dependencies: StdOut.java
- *
- *  B-tree.
- *
- *  Limitations
- *  -----------
- *   -  Assumes M is even and M >= 4
- *   -  should b be an array of children or list (it would help with
- *      casting to make it a list)
- *
- ******************************************************************************/
+/*
+    Grupo g22
+    Gill Quintana, Elias Sebastian            CI: 5.223.284       Seccion TR
+    Alvarenga Cavallero, Rodrigo              CI: 5.711.576       Seccion TR
+
+    Tarea 6-U4 - Ejercicio II.1
+
+  DECLARACIÓN DE HONOR
+  • Nosotros Elias Gill y Rodrigo Alvarenga:
+
+  • No hemos discutido el código fuente de nuestra tarea con ningún otro
+  grupo, solo con el Profesor o el AER.
+
+  • No hemos usado código obtenido de otro estudiante o de cualquier otra
+  fuente no autorizada, modificada o no modificada.
+
+  • Cualquier código o documentación utilizada en nuestro programa
+  obtenido de fuentes, tales como libros o notas de curso, han sido claramente
+  indicada en nuestra tarea.
+*/
 
 package programacion1;
 
@@ -54,17 +60,18 @@ public class BTree<Key extends Comparable<Key>, Value> {
 
     // helper B-tree node data type
     private static final class Node {
-        private int m; // number of children
+        private int numChildrens; // number of children
         private Entry[] children = new Entry[M]; // the array of children
 
         // create a node with k children
         private Node(int k) {
-            m = k;
+            numChildrens = k;
         }
     }
 
     // internal nodes: only use key and next
     // external nodes: only use key and value
+
     private static class Entry {
         private Comparable key;
         private Object val;
@@ -126,12 +133,13 @@ public class BTree<Key extends Comparable<Key>, Value> {
         return search(root, key, height);
     }
 
+    @SuppressWarnings("unchecked")
     private Value search(Node x, Key key, int ht) {
         Entry[] children = x.children;
 
         // external node
         if (ht == 0) {
-            for (int j = 0; j < x.m; j++) {
+            for (int j = 0; j < x.numChildrens; j++) {
                 if (eq(key, children[j].key))
                     return (Value) children[j].val;
             }
@@ -139,8 +147,8 @@ public class BTree<Key extends Comparable<Key>, Value> {
 
         // internal node
         else {
-            for (int j = 0; j < x.m; j++) {
-                if (j + 1 == x.m || less(key, children[j + 1].key))
+            for (int j = 0; j < x.numChildrens; j++) {
+                if (j + 1 == x.numChildrens || less(key, children[j + 1].key))
                     return search(children[j].next, key, ht - 1);
             }
         }
@@ -173,50 +181,54 @@ public class BTree<Key extends Comparable<Key>, Value> {
         height++;
     }
 
-    private Node insert(Node h, Key key, Value val, int ht) {
+    private Node insert(Node actual, Key key, Value val, int ht) {
         int j;
-        Entry t = new Entry(key, val, null);
+        Entry tmp = new Entry(key, val, null);
 
-        // external node
+        // si ya es nodo hoja
         if (ht == 0) {
-            for (j = 0; j < h.m; j++) {
-                if (less(key, h.children[j].key))
+            for (j = 0; j < actual.numChildrens; j++) {
+                if (less(key, actual.children[j].key))
                     break;
             }
         }
 
-        // internal node
+        // buscar donde meter
         else {
-            for (j = 0; j < h.m; j++) {
-                if ((j + 1 == h.m) || less(key, h.children[j + 1].key)) {
-                    Node u = insert(h.children[j++].next, key, val, ht - 1);
+            for (j = 0; j < actual.numChildrens; j++) {
+                // insertar si es el penultimo elemento o la key es menor que el hijo siguiente
+                if ((j + 1 == actual.numChildrens) || less(key, actual.children[j + 1].key)) {
+                    Node u = insert(actual.children[j++].next, key, val, ht - 1);
                     if (u == null)
                         return null;
-                    t.key = u.children[0].key;
-                    t.val = null;
-                    t.next = u;
+                    tmp.key = u.children[0].key;
+                    tmp.val = null;
+                    tmp.next = u;
                     break;
                 }
             }
         }
 
-        for (int i = h.m; i > j; i--)
-            h.children[i] = h.children[i - 1];
-        h.children[j] = t;
-        h.m++;
-        if (h.m < M)
+        // correr los hijos a la izquierda desde donde se quedo
+        for (int i = actual.numChildrens; i > j; i--)
+            actual.children[i] = actual.children[i - 1];
+        actual.children[j] = tmp;
+        actual.numChildrens++;
+        // si se lleno debemos partir el nodo
+        if (actual.numChildrens < M)
             return null;
         else
-            return split(h);
+            return split(actual);
     }
 
     // split node in half
-    private Node split(Node h) {
-        Node t = new Node(M / 2);
-        h.m = M / 2;
+    private Node split(Node nodo) {
+        Node tmp = new Node(M / 2);
+        nodo.numChildrens = M / 2;
+        // rellenar con la mitad de nodos
         for (int j = 0; j < M / 2; j++)
-            t.children[j] = h.children[M / 2 + j];
-        return t;
+            tmp.children[j] = nodo.children[M / 2 + j];
+        return tmp;
     }
 
     /**
@@ -233,24 +245,75 @@ public class BTree<Key extends Comparable<Key>, Value> {
         Entry[] children = h.children;
 
         if (ht == 0) {
-            for (int j = 0; j < h.m; j++) {
+            for (int j = 0; j < h.numChildrens; j++) {
                 s.append(indent + children[j].key + " " + children[j].val + "\n");
             }
         } else {
-            for (int j = 0; j < h.m; j++) {
+            for (int j = 0; j < h.numChildrens; j++) {
                 if (j > 0)
                     s.append(indent + "(" + children[j].key + ")\n");
-                s.append(toString(children[j].next, ht - 1, indent + "     "));
+                s.append(toString(children[j].next, ht - 1, indent + "        "));
+            }
+        }
+        return s.toString();
+    }
+
+    // metodo requerido por el ejercicio 1
+    public void rangePrint(Key value1, Key value2) throws Exception {
+        // determinar si el rango es valido
+        if (less(value2, value1) || eq(value1, "") || eq(value2, "")) {
+            throw new Exception("Valores de key invalidos");
+        }
+
+        // comprobar que los valores se encuentren en el arbol
+        if (get(value1) == "" || get(value2) == "") {
+            throw new Exception("Valores de key invalidos");
+        }
+
+        String s = rangePrint(root, height, "", value1, value2) + "\n";
+        // demostrar que si se encontro un valor
+        if (s.split("\n").length == 0) {
+            throw new Exception("Valores vacios");
+        }
+        System.out.println(s);
+    }
+
+    private String rangePrint(Node h, int ht, String indent, Key value1, Key value2) {
+        StringBuilder s = new StringBuilder();
+        Entry[] children = h.children;
+
+        if (ht == 0) {
+            for (int j = 0; j < h.numChildrens; j++) {
+                // si el valor esta en el rango lo imprimo
+                if ((less(children[j].key, value2) && less(value1, children[j].key))
+                        || eq(value1, children[j].key)
+                        || eq(value2, children[j].key)) {
+
+                    s.append(indent + children[j].key + " " + children[j].val + "\n");
+                }
+            }
+        } else {
+            for (int j = 0; j < h.numChildrens; j++) {
+                if ((less(children[j].key, value2) && less(value1, children[j].key))
+                        || eq(value1, children[j].key)
+                        || eq(value2, children[j].key)) {
+
+                    if (j > 0)
+                        s.append(indent + "(" + children[j].key + ")\n");
+                    s.append(rangePrint(children[j].next, ht - 1, indent + "     ", value1, value2));
+                }
             }
         }
         return s.toString();
     }
 
     // comparison functions - make Comparable instead of Key to avoid casts
+    @SuppressWarnings("unchecked")
     private boolean less(Comparable k1, Comparable k2) {
         return k1.compareTo(k2) < 0;
     }
 
+    @SuppressWarnings("unchecked")
     private boolean eq(Comparable k1, Comparable k2) {
         return k1.compareTo(k2) == 0;
     }

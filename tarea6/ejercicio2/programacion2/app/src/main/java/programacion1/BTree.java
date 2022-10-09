@@ -1,17 +1,23 @@
-/******************************************************************************
- *  Compilation:  javac BTree.java
- *  Execution:    java BTree
- *  Dependencies: StdOut.java
- *
- *  B-tree.
- *
- *  Limitations
- *  -----------
- *   -  Assumes M is even and M >= 4
- *   -  should b be an array of children or list (it would help with
- *      casting to make it a list)
- *
- ******************************************************************************/
+/*
+    Grupo g22
+    Gill Quintana, Elias Sebastian            CI: 5.223.284       Seccion TR
+    Alvarenga Cavallero, Rodrigo              CI: 5.711.576       Seccion TR
+
+    Tarea 6-U4 - Ejercicio II.2
+
+  DECLARACIÓN DE HONOR
+  • Nosotros Elias Gill y Rodrigo Alvarenga:
+
+  • No hemos discutido el código fuente de nuestra tarea con ningún otro
+  grupo, solo con el Profesor o el AER.
+
+  • No hemos usado código obtenido de otro estudiante o de cualquier otra
+  fuente no autorizada, modificada o no modificada.
+
+  • Cualquier código o documentación utilizada en nuestro programa
+  obtenido de fuentes, tales como libros o notas de curso, han sido claramente
+  indicada en nuestra tarea.
+*/
 
 package programacion1;
 
@@ -46,7 +52,7 @@ package programacion1;
 public class BTree<Key extends Comparable<Key>, Value> {
     // max children per B-tree node = M-1
     // (must be even and greater than 2)
-    private static int M = 10;
+    private static int M;
 
     private Node root; // root of the B-tree
     private int height; // height of the B-tree
@@ -82,11 +88,11 @@ public class BTree<Key extends Comparable<Key>, Value> {
      * @throws Exception
      */
     public BTree(int m) throws Exception {
-        root = new Node(0);
         if (m % 2 != 0 || m <= 2) {
             throw new Exception("Valor invalido de m");
         }
         M = m;
+        root = new Node(0);
     }
 
     /**
