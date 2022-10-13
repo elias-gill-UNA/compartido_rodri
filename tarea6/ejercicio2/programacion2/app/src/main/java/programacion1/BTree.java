@@ -53,6 +53,9 @@ public class BTree<Key extends Comparable<Key>, Value> {
     // max children per B-tree node = M-1
     // (must be even and greater than 2)
     private static int M;
+    public int getM(){
+        return M;
+    }
 
     private Node root; // root of the B-tree
     private int height; // height of the B-tree

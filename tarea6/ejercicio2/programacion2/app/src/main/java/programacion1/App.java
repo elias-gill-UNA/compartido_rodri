@@ -65,6 +65,7 @@ public class App {
 
             System.out.println("size:    " + st.size());
             System.out.println("height:  " + st.height());
+            System.out.println("M value: " + st.getM());
             System.out.println(st);
             System.out.println();
 
