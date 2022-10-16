@@ -3,12 +3,62 @@
  */
 package app;
 
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.jgrapht.Graph;
+import org.jgrapht.alg.cycle.CycleDetector;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
+
+// Una clase para representar un objeto grafo
+class grafo {
+    // Una lista de listas para representar una lista de adyacencia
+    Graph<Integer, DefaultEdge> g = new SimpleDirectedGraph<>(DefaultEdge.class);
+    int vertices;
+
+    grafo(int vertices, int aristas[][]) {
+        this.vertices = vertices;
+        for (int i = 0; i < vertices; i++) {
+            g.addVertex(i);
+        }
+
+        // El grafo simple dirigido no permite Auto-bucles(ciclos) por tanto lanza una
+        // exepción
+        // Se agregan las aristas
+        try {
+            for (int i = 0; i < aristas.length; i++) {
+                g.addEdge(aristas[i][0], aristas[i][1]);
+            }
+
+            // verifica si existe ciclos
+            CycleDetector aux = new CycleDetector(g);
+            // lanza una excepción si encuentra un ciclo
+            if (aux.detectCycles()) {
+                throw new RuntimeException();
+            }
+
+        } catch (RuntimeException e) {
+            System.out.println("No se permiten ciclos!");
+        }
     }
 
+    public void trancados() {
+        for (Integer i : g.vertexSet()) {
+            if (g.outgoingEdgesOf(i).isEmpty()) {
+                System.out.println(i);
+            }
+        }
+    }
+}
+
+public class App {
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        int[][] edges = new int[][] {
+                new int[] { 1, 3 }, new int[] { 1, 0 }, new int[] { 1, 4 },
+                new int[] { 0, 2 }
+        };
+        grafo g = new grafo(5, edges);
+        g.trancados();
     }
 }
