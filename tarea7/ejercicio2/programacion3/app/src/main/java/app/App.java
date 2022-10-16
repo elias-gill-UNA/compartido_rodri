@@ -16,9 +16,12 @@ class grafo {
     // Una lista de listas para representar una lista de adyacencia
     Graph<Integer, DefaultEdge> g = new SimpleDirectedGraph<>(DefaultEdge.class);
     int vertices;
+    int inicial;
 
-    grafo(int vertices, int aristas[][]) {
+    grafo(int vertices, int aristas[][], int inicio) {
         this.vertices = vertices;
+        this.inicial = inicio;
+
         for (int i = 0; i < vertices; i++) {
             g.addVertex(i);
         }
@@ -44,8 +47,13 @@ class grafo {
     }
 
     public void trancados() {
+        if (g.outgoingEdgesOf(inicial).isEmpty()) {
+            System.out.println("El nodo de inicio se encuentra aislado");
+            return;
+        }
+
         for (Integer i : g.vertexSet()) {
-            if (g.outgoingEdgesOf(i).isEmpty()) {
+            if (i != inicial && g.outgoingEdgesOf(i).isEmpty()) {
                 System.out.println(i);
             }
         }
@@ -58,7 +66,7 @@ public class App {
                 new int[] { 1, 3 }, new int[] { 1, 0 }, new int[] { 1, 4 },
                 new int[] { 0, 2 }
         };
-        grafo g = new grafo(5, edges);
+        grafo g = new grafo(5, edges, 1);
         g.trancados();
     }
 }
