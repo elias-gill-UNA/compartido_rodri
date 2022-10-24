@@ -5,3 +5,5 @@
 /tarea3/puta/build/
 /tarea3/implementacion_arbol/nbproject/private/
 *.class
+/bin/
+/build/
