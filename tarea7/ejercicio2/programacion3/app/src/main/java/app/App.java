@@ -3,6 +3,9 @@
  */
 package app;
 
+import java.io.File;
+import java.util.Scanner;
+
 import org.jgrapht.Graph;
 import org.jgrapht.alg.cycle.CycleDetector;
 import org.jgrapht.graph.DefaultEdge;
@@ -26,24 +29,18 @@ class grafo {
         // El grafo simple dirigido no permite Auto-bucles(ciclos) por tanto lanza una
         // exepción
         // Se agregan las aristas
-        try {
-            for (int i = 0; i < aristas.length; i++) {
-                g.addEdge(aristas[i][0], aristas[i][1]);
-            }
-
-            // verifica si existe ciclos
-            CycleDetector aux = new CycleDetector(g);
-            // lanza una excepción si encuentra un ciclo
-            if (aux.detectCycles()) {
-                throw new RuntimeException();
-            }
-
-        } catch (RuntimeException e) {
-            System.out.println("No se permiten ciclos!");
+        for (int i = 0; i < aristas.length; i++) {
+            g.addEdge(aristas[i][0], aristas[i][1]);
         }
     }
 
     public void trancados() {
+        // verifica si existe ciclos
+        CycleDetector aux = new CycleDetector(g);
+        if (aux.detectCycles()) {
+            throw new RuntimeException("No se permiten ciclos");
+        }
+
         if (g.outgoingEdgesOf(inicial).isEmpty()) {
             System.out.println("El nodo de inicio se encuentra aislado");
             return;
@@ -59,11 +56,25 @@ class grafo {
 
 public class App {
     public static void main(String[] args) {
-        int[][] edges = new int[][] {
-                new int[] { 1, 3 }, new int[] { 1, 0 }, new int[] { 1, 4 },
-                new int[] { 0, 2 }
-        };
-        grafo g = new grafo(5, edges, 1);
-        g.trancados();
+        try {
+            Scanner sc = new Scanner(new File("/home/elias/entrada.txt"));
+            int islas = sc.nextInt();
+            int puentes = sc.nextInt();
+            int inicial = sc.nextInt();
+
+            int[][] edges = new int[islas][2];
+            for (int i = 0; i < puentes - 1; i++) {
+                int in = sc.nextInt();
+                int out = sc.nextInt();
+                edges[i] = new int[] { in, out };
+            }
+
+            grafo g = new grafo(islas, edges, inicial);
+            g.trancados();
+            sc.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }
