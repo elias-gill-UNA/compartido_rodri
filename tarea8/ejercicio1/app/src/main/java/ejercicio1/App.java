@@ -10,7 +10,7 @@ public class App {
         } else if (n % 2 == 0) { // n par
             return exponente(a, n / 2) ^ 2;
         } else {
-            return exponente(a, (n-1)/2) ^ 2;
+            return exponente(a, (n - 1) / 2) ^ 2;
         }
     }
 
@@ -23,12 +23,53 @@ public class App {
     }
 
     public static void main(String[] args) {
-        System.out.println("3^2: " + exponente(3, 2));
-        System.out.println("3^3: " + exponente(3, 3));
-        System.out.println("3^8: " + exponente(3, 8));
-        System.out.println("3^5: " + exponente(3, 5));
+        System.out.println(
+                " -------------------------------------------------------------------------------------------------------------------------------------- ");
+        System.out.printf("| %-12s | %-57s | %57s |\n", "    ^N    ", "        Divide y venceras",
+                "Fuerza Bruta                  ");
+        System.out.println(
+                "|--------------|-----------------------------------------------------------|-----------------------------------------------------------|");
+        System.out.printf("| %-12s | %-12s | %-12s | %-12s | %-12s | %-12s | %-12s | %-12s | %-12s |\n",
+                "", "T(n) ms", "T/N", "T/(N*LogN)", "T/N^2", "T(n) ms", "T/N", "T/(N*LogN)", "T/(N^2)");
 
+        // realizar hasta la potencia de 50
+        for (int i = 4; i < 400; i+=6) {
+            double t1, t2;
+            double media1 = 0;
+            double media2 = 0;
+           
+            // 10 repeticiones por si acaso
+            for (int k = 0; k < 10; k++) { 
+                // iteracion con divide y venceras
+                t1 = System.nanoTime();
+                exponente(7, i);
+                t2 = System.nanoTime();
+                media1 += t2 - t1;
 
-        // TODO  generar tabla de tiempos
+                // iteracion con fuerzaBruta
+                t1 = System.nanoTime();
+                fuerzaBruta(7, i);
+                t2 = System.nanoTime();
+                media2 += t2 - t1;
+            }
+
+            // transformar de nano segundo a milisegundo
+            media1 = media1 / 1000;
+            media2 = media2 / 1000;
+            int repeticiones = 50;
+
+            // imprimir resultados parciales
+            System.out.println(
+                    "|--------------|-----------------------------------------------------------|-----------------------------------------------------------|");
+            System.out.printf("| %12d | %12f | %12f | %12f | %12f | %12f | %12f | %12f | %12f |\n",
+                    i, media1, media1 / repeticiones,
+                    media1 / (repeticiones * (Math.log(repeticiones) / Math.log(2))),
+                    media1 / (repeticiones ^ 2),
+                    media2, media2 / repeticiones, media2 / (repeticiones * (Math.log(repeticiones) / Math.log(2))),
+                    media2 / (repeticiones ^ 2));
+
+        }
+        System.out.println(
+                " -------------------------------------------------------------------------------------------------------------------------------------- ");
     }
 }

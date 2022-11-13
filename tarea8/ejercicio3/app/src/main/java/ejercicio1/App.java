@@ -24,9 +24,47 @@ public class App {
         return cambio;
     }
 
+    // version polinomial con programacion dinamica probablemente
+    // Función para encontrar el número mínimo de monedas requeridas
+    // para obtener un total de `target` del conjunto `S`
+    public static int findMinCoins(int[] S, int target) {
+        // `T[i]` almacena el número mínimo de monedas necesarias para obtener un total
+        // de `i`
+        int[] T = new int[target + 1];
+
+        for (int i = 1; i <= target; i++) {
+            // inicializa el número mínimo de monedas necesarias hasta el infinito
+            T[i] = Integer.MAX_VALUE;
+            int result = Integer.MAX_VALUE;
+
+            // hacer por cada moneda
+            for (int c : S) {
+                // comprueba si el índice no se vuelve negativo al incluir
+                // moneda actual `c`
+                if (i - c >= 0) {
+                    result = T[i - c];
+                }
+
+                // si se puede alcanzar el total incluyendo la moneda actual `c`,
+                // actualiza el número mínimo de monedas necesarias `T[i]`
+                if (result != Integer.MAX_VALUE) {
+                    T[i] = Integer.min(T[i], result + 1);
+                }
+            }
+        }
+
+        // `T[target]` almacena la cantidad mínima de monedas necesarias para
+        // obtener un total de `target`
+        for (int var : T) {
+            System.out.println(var);
+        }
+        return T[target];
+    }
+
     public static void main(String[] args) {
         int[] billetes = new int[] { 50, 25, 10, 7, 5 };
         int res[];
+
         try {
             res = algoritmoVoraz(121, billetes);
             for (int i = 0; i < res.length; i++) {
@@ -34,6 +72,12 @@ public class App {
             }
         } catch (Exception e) {
             System.out.println(e);
+        }
+
+        int coins = findMinCoins(billetes, 121);
+        if (coins != Integer.MAX_VALUE) {
+            System.out.print("The minimum number of coins required to get the " +
+                    "desired change is " + coins);
         }
     }
 }
