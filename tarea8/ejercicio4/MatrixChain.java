@@ -2,7 +2,6 @@ class MatrixChain {
 
     static char name = 'A'; 
 
-   
     static void PRINT_OPTIMAL_PARENS(int i, int j, int n, int[][] bracket) {
         if (i == j) {
             System.out.print(name++);
@@ -33,12 +32,11 @@ class MatrixChain {
                 }
             }
         }
-        
-       
+    
         System.out.print("\nEl costo minimo del producto es:" + m[1][n - 1]);
         System.out.println("");
         
-        // imprime la parentizacion optima de la multiplicacion 
+        
         PRINT_OPTIMAL_PARENS(1, n - 1, n, m);
        
     }
